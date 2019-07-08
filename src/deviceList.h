@@ -13,6 +13,8 @@ typedef struct {
 		std::string manufacturer;
 		std::string serialNumber;
 		int deviceAddress;
+		int xinputId;
+		int subtype;
 } ListResultItem_t;
 
 typedef enum  _DeviceState_t {

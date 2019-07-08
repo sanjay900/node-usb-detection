@@ -53,6 +53,8 @@ ListResultItem_t* CopyElement(ListResultItem_t* item) {
     dst->manufacturer   =   item->manufacturer;
     dst->serialNumber   =   item->serialNumber;
     dst->deviceAddress  =   item->deviceAddress;
+    dst->xinputId  		=   item->xinputId;
+    dst->subtype 		=   item->subtype;
 
     return dst;
 }

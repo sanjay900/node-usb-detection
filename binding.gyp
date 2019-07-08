@@ -19,7 +19,13 @@
             'include_dirs+':
             [
               # Not needed now
-            ]
+            ],
+            'link_settings': {
+              'libraries': [
+                '-lCfgmgr32',
+                '-lXInput'
+              ]
+            }
           }
         ],
         ['OS=="mac"',
