@@ -9,6 +9,8 @@
 #define OBJECT_ITEM_DEVICE_ADDRESS "deviceAddress"
 #define OBJECT_ITEM_XINPUT_ADDR "xinputId"
 #define OBJECT_ITEM_XINPUT_SUBTYPE "subtype"
+#define OBJECT_ITEM_DEVICE_TYPE "deviceType"
+#define OBJECT_ITEM_DEVICE_PATH "path"
 
 Nan::Callback *addedCallback;
 bool isAddedRegistered = false;
@@ -62,6 +64,8 @@ void NotifyAdded(ListResultItem_t *it)
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_MANUFACTURER).ToLocalChecked(), Nan::New<v8::String>(it->manufacturer.c_str()).ToLocalChecked());
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_SERIAL_NUMBER).ToLocalChecked(), Nan::New<v8::String>(it->serialNumber.c_str()).ToLocalChecked());
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_ADDRESS).ToLocalChecked(), Nan::New<v8::Number>(it->deviceAddress));
+		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_TYPE).ToLocalChecked(), Nan::New<v8::String>(it->deviceType.c_str()).ToLocalChecked());
+		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_PATH).ToLocalChecked(), Nan::New<v8::String>(it->path.c_str()).ToLocalChecked());
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_XINPUT_ADDR).ToLocalChecked(), Nan::New<v8::Number>(it->xinputId));
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_XINPUT_SUBTYPE).ToLocalChecked(), Nan::New<v8::Number>(it->subtype));
 		argv[0] = item;
@@ -115,6 +119,8 @@ void NotifyRemoved(ListResultItem_t *it)
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_NAME).ToLocalChecked(), Nan::New<v8::String>(it->deviceName.c_str()).ToLocalChecked());
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_MANUFACTURER).ToLocalChecked(), Nan::New<v8::String>(it->manufacturer.c_str()).ToLocalChecked());
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_SERIAL_NUMBER).ToLocalChecked(), Nan::New<v8::String>(it->serialNumber.c_str()).ToLocalChecked());
+		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_TYPE).ToLocalChecked(), Nan::New<v8::String>(it->deviceType.c_str()).ToLocalChecked());
+		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_PATH).ToLocalChecked(), Nan::New<v8::String>(it->path.c_str()).ToLocalChecked());
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_ADDRESS).ToLocalChecked(), Nan::New<v8::Number>(it->deviceAddress));
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_XINPUT_ADDR).ToLocalChecked(), Nan::New<v8::Number>(it->xinputId));
 		item->Set(Nan::New<v8::String>(OBJECT_ITEM_XINPUT_SUBTYPE).ToLocalChecked(), Nan::New<v8::Number>(it->subtype));
@@ -217,6 +223,8 @@ void EIO_AfterFind(uv_work_t *req)
 			item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_NAME).ToLocalChecked(), Nan::New<v8::String>((*it)->deviceName.c_str()).ToLocalChecked());
 			item->Set(Nan::New<v8::String>(OBJECT_ITEM_MANUFACTURER).ToLocalChecked(), Nan::New<v8::String>((*it)->manufacturer.c_str()).ToLocalChecked());
 			item->Set(Nan::New<v8::String>(OBJECT_ITEM_SERIAL_NUMBER).ToLocalChecked(), Nan::New<v8::String>((*it)->serialNumber.c_str()).ToLocalChecked());
+			item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_TYPE).ToLocalChecked(), Nan::New<v8::String>((*it)->deviceType.c_str()).ToLocalChecked());
+			item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_PATH).ToLocalChecked(), Nan::New<v8::String>((*it)->path.c_str()).ToLocalChecked());
 			item->Set(Nan::New<v8::String>(OBJECT_ITEM_DEVICE_ADDRESS).ToLocalChecked(), Nan::New<v8::Number>((*it)->deviceAddress));
 			item->Set(Nan::New<v8::String>(OBJECT_ITEM_XINPUT_ADDR).ToLocalChecked(), Nan::New<v8::Number>((*it)->xinputId));
 			item->Set(Nan::New<v8::String>(OBJECT_ITEM_XINPUT_SUBTYPE).ToLocalChecked(), Nan::New<v8::Number>((*it)->subtype));

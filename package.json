@@ -7,6 +7,7 @@
   "gypfile": true,
   "scripts": {
     "install": "prebuild-install || node-gyp rebuild",
+    "rebuild:dev": "node-gyp -j 16 rebuild --debug",
     "prepublishOnly": "npm run validate",
     "lint": "eslint **/*.js",
     "validate": "npm run lint && npm test",

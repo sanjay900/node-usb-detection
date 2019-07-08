@@ -514,10 +514,11 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA *pspDevInfoData, TCHAR
 	DWORD nSize;
 	static int dummy = 1;
 
-	// resultItem->locationId = 0;
-	// resultItem->deviceAddress = dummy++;
-	resultItem->xinputId = 0;
-	resultItem->subtype = 0;
+	resultItem->locationId = 0;
+	resultItem->deviceAddress = dummy++;
+	resultItem->xinputId = -1;
+	resultItem->subtype = -1;
+	resultItem->deviceType = resultItem->deviceName;
 
 	// device found
 	if (DllSetupDiGetDeviceRegistryProperty(hDevInfo, pspDevInfoData, SPDRP_FRIENDLYNAME, &DataT, (PBYTE)buf, buffSize, &nSize))
@@ -532,6 +533,25 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA *pspDevInfoData, TCHAR
 	{
 		resultItem->manufacturer = buf;
 	}
+	DEVINST child;
+	CONFIGRET cr;
+	DEVPROPTYPE PropertyType;
+	ULONG size = MAX_PATH;
+	cr = CM_Get_Child(&child, pspDevInfoData->DevInst, 0);
+	if (cr == CR_SUCCESS)
+	{
+		cr = CM_Get_DevNode_PropertyW(child, &DEVPKEY_Device_DriverDesc, &PropertyType, (PBYTE)buf, &size, 0);
+		if (cr == CR_SUCCESS)
+		{
+			const size_t origsize = wcslen((wchar_t*)buf) + 1;
+			const size_t newsize = origsize*2;
+    		size_t convertedChars = 0;
+			TCHAR *buf2 = new TCHAR[newsize];
+			wcstombs_s(&convertedChars, buf2, newsize, (const wchar_t *)buf, _TRUNCATE);
+			resultItem->deviceType = buf2;
+		}
+	}
+	
 	if (DllSetupDiGetDeviceRegistryProperty(hDevInfo, pspDevInfoData, SPDRP_HARDWAREID, &DataT, (PBYTE)buf, buffSize, &nSize))
 	{
 		// Use this to extract VID / PID
@@ -572,14 +592,9 @@ void ExtractDeviceInfo(HDEVINFO hDevInfo, SP_DEVINFO_DATA *pspDevInfoData, TCHAR
 		extractIdBus(buf, resultItem);
 		if (resultItem->deviceName.find("Xbox 360") != std::string::npos)
 		{
-			DEVINST next;
-			CONFIGRET cr;
-			cr = CM_Get_Child(&next, pspDevInfoData->DevInst, 0);
 			if (cr == CR_SUCCESS)
 			{
-				DEVPROPTYPE PropertyType;
-				ULONG size = MAX_PATH;
-				cr = CM_Get_DevNode_PropertyW(next, &DEVPKEY_Device_LocationInfo, &PropertyType, (PBYTE)buf, &size, 0);
+				cr = CM_Get_DevNode_PropertyW(child, &DEVPKEY_Device_LocationInfo, &PropertyType, (PBYTE)buf, &size, 0);
 				if (cr == CR_SUCCESS)
 				{
 					extractXInput(buf, resultItem);

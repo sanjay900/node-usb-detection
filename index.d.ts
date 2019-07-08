@@ -19,7 +19,9 @@ export interface LibUsbDevice {
     deviceName: string;
     manufacturer: string;
     serialNumber: string;
+    deviceType: string;
     deviceAddress: number;
+    devType: number;
     libUsb: LibUsbDev;
 }
 

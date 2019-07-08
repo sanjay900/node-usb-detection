@@ -55,6 +55,8 @@ ListResultItem_t* CopyElement(ListResultItem_t* item) {
     dst->deviceAddress  =   item->deviceAddress;
     dst->xinputId  		=   item->xinputId;
     dst->subtype 		=   item->subtype;
+    dst->deviceType 	=   item->deviceType;
+    dst->path		 	=   item->path;
 
     return dst;
 }

@@ -12,6 +12,8 @@ typedef struct {
 		std::string deviceName;
 		std::string manufacturer;
 		std::string serialNumber;
+		std::string deviceType;
+		std::string path;
 		int deviceAddress;
 		int xinputId;
 		int subtype;

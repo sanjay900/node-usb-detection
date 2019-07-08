@@ -11,3 +11,5 @@ prebuilds/
 
 # From `segfault-handler`
 stacktrace-*.log
+test.js
+.vscode
